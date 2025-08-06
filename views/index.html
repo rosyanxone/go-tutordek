@@ -1,0 +1,27 @@
+{{ template "layout" . }}
+{{ define "main" }}
+<div class="">Halo saya sedang belajar Golang web</div>
+
+{{ range . }}
+    <ul>
+        <li class="text">
+            {{ .ID }}
+        </li>
+        <li class="text">
+            {{ .Name }}
+        </li>
+        <li class="text">
+            {{ .Price }}
+        </li>
+        <li class="text">
+            {{ .Stock }}
+        </li>
+    </ul>
+
+    {{ if lt .Stock 3 }}
+    <p>Stok hampir habis</p>
+    {{ end }}
+
+{{ end }}
+
+{{ end }}
