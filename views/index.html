@@ -18,9 +18,11 @@
         </li>
     </ul>
 
-    {{ if lt .Stock 3 }}
+    <p>{{ .StockStatus }}</p>
+
+    <!-- {{ if lt .Stock 3 }}
     <p>Stok hampir habis</p>
-    {{ end }}
+    {{ end }} -->
 
 {{ end }}
 
