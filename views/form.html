@@ -1,0 +1,20 @@
+{{ template "layout" . }}
+
+{{ define "main" }}
+<div class="">
+    <form action="/process" method="POST">
+        <div class="">
+            <label for="name">Name</label>
+            <input type="name" name="name" placeholder="Your Name" required>
+        </div>
+        <div class="">
+            <label for="message">Message</label>
+            <input type="message" name="message" placeholder="Your Message" required>
+        </div>
+
+        <div class="">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+{{ end }}

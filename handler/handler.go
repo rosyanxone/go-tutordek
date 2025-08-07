@@ -79,3 +79,80 @@ func ProductHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func PostGet(w http.ResponseWriter, r *http.Request) {
+	method := r.Method
+
+	switch method {
+	case "GET":
+		w.Write([]byte("This is a GET method"))
+	case "POST":
+		w.Write([]byte("This is a POST method"))
+	default:
+		http.Error(w, "An error has occured", http.StatusBadRequest)
+	}
+}
+
+func Form(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		templ, err := template.ParseFiles(path.Join("views", "form.html"), path.Join("views", "layout.html"))
+
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "An error has occured", http.StatusInternalServerError)
+			return
+		}
+
+		err = templ.Execute(w, nil)
+
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "An error has occured", http.StatusInternalServerError)
+			return
+		}
+
+		return
+	}
+
+	http.Error(w, "An error has occured", http.StatusBadRequest)
+}
+
+func Process(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		err := r.ParseForm()
+
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "An error has occured", http.StatusInternalServerError)
+			return
+		}
+
+		name := r.Form.Get("name")
+		message := r.Form.Get("message")
+
+		data := map[string]any{
+			"name":    name,
+			"message": message,
+		}
+
+		templ, err := template.ParseFiles(path.Join("views", "result.html"), path.Join("views", "layout.html"))
+
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "An error has occured", http.StatusInternalServerError)
+			return
+		}
+
+		err = templ.Execute(w, data)
+
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "An error has occured", http.StatusInternalServerError)
+			return
+		}
+
+		return
+	}
+
+	http.Error(w, "An error has occured", http.StatusBadRequest)
+}
